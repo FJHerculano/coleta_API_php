@@ -22,9 +22,10 @@ class CompanyValidation{
             ],
             'email' => [
                 'label' => 'E-mail',
-                'rules' => "required|is_unique[companies.email,id,{$id}]",
+                'rules' => "required|valid_email|is_unique[companies.email,id,{$id}]",
                 'errors'=> [
                     'required' => "O e-mail é obrigatório",
+                    'valid_email' => "O e-mail deve conter um formato valido",
                     'is_unique' => "esse e-mail já existe",
                 ],
             ],

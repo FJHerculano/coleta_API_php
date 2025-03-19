@@ -79,10 +79,7 @@ class CompaniesController extends ResourceController{
      *
      * @return ResponseInterface
      */
-    public function edit($id = null)
-    {
-        //
-    }
+    public function edit($id = null){}
 
     /**
      * Add or update a model resource, from "posted" properties.
@@ -93,7 +90,21 @@ class CompaniesController extends ResourceController{
      */
     public function update($id = null)
     {
-        //
+        
+        $rules = (new CompanyValidation)->getRules($id);
+
+        if(!$this->validate($rules)){
+            return $this->failValidationErrors($this->validator->getErrors());
+        }
+
+        $inputRequest = esc($this->request->getJSON(assoc: true));
+    
+        $this->model->update($id, $inputRequest);
+
+        $company = $this->model->find($id);
+
+        return $this->respondUpdated(data: $company, message: 'Empresa atualizada com sucesso!');
+
     }
 
     /**
@@ -103,8 +114,18 @@ class CompaniesController extends ResourceController{
      *
      * @return ResponseInterface
      */
-    public function delete($id = null)
-    {
-        //
+    public function delete($id = null){
+
+        $company = $this->model->find($id);
+
+        if($company === null){
+            return $this->failNotFound(code: ResponseInterface::HTTP_NOT_FOUND);
+        }
+
+        $this->model->delete($id);
+
+        return $this->respondDeleted();
+        
     }
+
 }

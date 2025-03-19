@@ -8,9 +8,20 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 
-$routes->group('api/v1', ['namespace' => ''], static function($routes){
+$routes->group('', ['namespace' => ''], static function($routes){
 
+    
     $routes->resource('companies', ['controller' => CompaniesController::class, 'except' => 'new,edit' ]);
+
+
+    /**
+     * @var RouteCollection $routes
+     */
+    $routes->options('companies', static function(){ });
+
+    
+    $routes->options('companies/(:any)', static function(){ });
+
 
 });
 
