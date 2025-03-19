@@ -4,7 +4,7 @@ use App\Controllers\Api\V1\CompaniesController;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * @var RouteCollection $routes
+ * @var RouteCollection $routes teste
  */
 $routes->get('/', 'Home::index');
 
